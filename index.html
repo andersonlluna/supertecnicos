@@ -1,0 +1,2175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0F1729">
+<title>Supertécnicos CE — Cartola</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F1729;
+    --surface: #1A2238;
+    --surface-2: #243049;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.18);
+    --text: #F1F5F9;
+    --text-muted: #B8C5D6;
+    --gold: #FFB627;
+    --green: #22C55E;
+    --orange: #FB923C;
+    --red: #EF4444;
+    --silver: #CBD5E1;
+    --icy: #60A5FA;
+    --display: 'Oswald', system-ui, sans-serif;
+    --body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); }
+  body {
+    font-family: var(--body);
+    color: var(--text);
+    font-size: 19px;
+    line-height: 1.5;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 15% -10%, rgba(255, 182, 39, 0.10), transparent 55%),
+      radial-gradient(ellipse at 85% 110%, rgba(34, 197, 94, 0.07), transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .app {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 20px 16px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  .header { margin-bottom: 18px; }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .brand-block { min-width: 0; }
+  .brand {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    line-height: 1.05;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .brand-sub {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 2.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .upload-btn {
+    background: var(--surface);
+    border: 1.5px solid var(--border-strong);
+    color: var(--text);
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 52px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .upload-btn:hover, .upload-btn:active {
+    background: var(--surface-2);
+    border-color: var(--gold);
+  }
+
+  /* ROUND BANNER */
+  .round-banner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    padding: 16px 20px;
+    margin-bottom: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .round-banner::after {
+    content: '';
+    position: absolute;
+    right: -30px;
+    top: -30px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(255, 182, 39, 0.15), transparent 70%);
+    pointer-events: none;
+  }
+  .round-banner-info { z-index: 1; }
+  .round-label {
+    font-family: var(--display);
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 14px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .round-num {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 34px;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .round-banner-meta {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: right;
+    z-index: 1;
+    line-height: 1.4;
+    max-width: 55%;
+  }
+  .round-banner-meta strong { color: var(--text); display: block; font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .source-pill {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(148, 163, 184, 0.15);
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .source-pill.live { background: rgba(34, 197, 94, 0.18); color: var(--green); }
+
+  /* HERO CARDS */
+  .heroes {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .hero-card {
+    border-radius: 18px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-card.mvp {
+    background: linear-gradient(135deg, rgba(255, 182, 39, 0.18) 0%, rgba(26, 34, 56, 0.95) 70%);
+    border-color: rgba(255, 182, 39, 0.4);
+  }
+  .hero-card.mitada {
+    background: linear-gradient(135deg, rgba(251, 146, 60, 0.18) 0%, rgba(26, 34, 56, 0.95) 70%);
+    border-color: rgba(251, 146, 60, 0.4);
+  }
+  .hero-card.lanterna {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.16) 0%, rgba(26, 34, 56, 0.95) 70%);
+    border-color: rgba(239, 68, 68, 0.35);
+  }
+  .hero-card.caneca {
+    background: linear-gradient(135deg, rgba(96, 165, 250, 0.16) 0%, rgba(26, 34, 56, 0.95) 70%);
+    border-color: rgba(96, 165, 250, 0.35);
+  }
+  .hero-card.podium {
+    background: linear-gradient(135deg, rgba(203, 213, 225, 0.14) 0%, rgba(26, 34, 56, 0.95) 70%);
+    border-color: rgba(203, 213, 225, 0.30);
+  }
+  .hero-icon {
+    font-size: 32px;
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .hero-icon.gold { background: rgba(255, 182, 39, 0.22); }
+  .hero-icon.orange { background: rgba(251, 146, 60, 0.22); }
+  .hero-icon.red { background: rgba(239, 68, 68, 0.22); }
+  .hero-icon.icy { background: rgba(96, 165, 250, 0.22); }
+  .hero-icon.silver { background: rgba(203, 213, 225, 0.20); }
+  .hero-info { flex: 1; min-width: 0; }
+  .hero-label {
+    font-family: var(--display);
+    font-size: 14px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .hero-name {
+    font-family: var(--body);
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+  }
+  .hero-bottom {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .hero-points {
+    font-family: var(--display);
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .hero-points.gold { color: var(--gold); }
+  .hero-points.orange { color: var(--orange); }
+  .hero-points.red { color: var(--red); }
+  .hero-points.icy { color: var(--icy); }
+  .hero-points.silver { color: var(--silver); }
+  .hero-detail {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* LÍDERES DA TEMPORADA */
+  .leaders {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    position: relative;
+  }
+  .leaders::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,182,39,0.04), transparent 60%);
+    pointer-events: none;
+  }
+  .leaders-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 20px 14px;
+    border-bottom: 1.5px solid var(--border);
+    position: relative;
+  }
+  .leaders-icon { font-size: 20px; }
+  .leaders-title {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text);
+  }
+  .leader-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    position: relative;
+  }
+  .leader-row:not(:last-child) {
+    border-bottom: 1px dashed var(--border);
+  }
+  .leader-emoji {
+    font-size: 32px;
+    width: 50px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .leader-info { flex: 1; min-width: 0; }
+  .leader-cat {
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .leader-cat .hint { opacity: 0.8; font-size: 13px; letter-spacing: 0.5px; }
+  .leader-name {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+  }
+  .leader-count {
+    font-family: var(--display);
+    font-size: 34px;
+    font-weight: 700;
+    flex-shrink: 0;
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 1px;
+  }
+  .leader-count .x { font-size: 20px; opacity: 0.7; font-weight: 600; }
+  .leader-count.gold { color: var(--gold); }
+  .leader-count.orange { color: var(--orange); }
+  .leader-count.red { color: var(--red); }
+  .leader-count.silver { color: var(--silver); }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 18px;
+    background: var(--surface);
+    padding: 6px;
+    border-radius: 16px;
+    border: 1.5px solid var(--border);
+  }
+  .tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 6px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.3px;
+    min-height: 52px;
+  }
+  .tab.active {
+    background: var(--gold);
+    color: #0F1729;
+    box-shadow: 0 4px 14px rgba(255, 182, 39, 0.25);
+  }
+
+  /* CLASSIFICAÇÃO */
+  .classif-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .classif-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 14px 16px;
+    min-height: 72px;
+  }
+  .classif-row.top1 {
+    background: linear-gradient(100deg, rgba(255, 182, 39, 0.2) 0%, rgba(26, 34, 56, 1) 70%);
+    border-color: rgba(255, 182, 39, 0.45);
+  }
+  .classif-row.top2 {
+    background: linear-gradient(100deg, rgba(203, 213, 225, 0.14) 0%, rgba(26, 34, 56, 1) 70%);
+    border-color: rgba(203, 213, 225, 0.25);
+  }
+  .classif-row.top3 {
+    background: linear-gradient(100deg, rgba(251, 146, 60, 0.16) 0%, rgba(26, 34, 56, 1) 70%);
+    border-color: rgba(251, 146, 60, 0.3);
+  }
+  .classif-row.last {
+    background: linear-gradient(100deg, rgba(239, 68, 68, 0.12) 0%, rgba(26, 34, 56, 1) 70%);
+    border-color: rgba(239, 68, 68, 0.25);
+  }
+  .pos {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 26px;
+    width: 38px;
+    text-align: center;
+    flex-shrink: 0;
+    color: var(--text-muted);
+    line-height: 1;
+  }
+  .classif-row.top1 .pos { color: var(--gold); font-size: 30px; }
+  .classif-row.top2 .pos { color: var(--silver); }
+  .classif-row.top3 .pos { color: var(--orange); }
+  .classif-row.last .pos { color: var(--red); }
+  .classif-info { flex: 1; min-width: 0; }
+  .classif-name {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .classif-meta {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .classif-pts-wrap { text-align: right; flex-shrink: 0; }
+  .classif-pts {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--text);
+    line-height: 1;
+  }
+  .classif-row.top1 .classif-pts { color: var(--gold); }
+  .classif-pts-label {
+    font-family: var(--body);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-top: 4px;
+  }
+
+  /* RODADAS */
+  .rounds-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .round-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 18px;
+  }
+  .round-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1.5px solid var(--border);
+  }
+  .round-title {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  .round-count {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .round-result-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 17px;
+    gap: 10px;
+  }
+  .round-result-line:not(:last-child) {
+    border-bottom: 1px dashed var(--border);
+  }
+  .round-result-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    min-width: 0;
+    flex: 1;
+  }
+  .round-result-name span.nm {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .round-result-pos {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text-muted);
+    width: 30px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .round-result-pos.first { color: var(--gold); font-size: 20px; }
+  .round-result-pos.last { color: var(--red); }
+  .round-result-pts {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+  .round-result-pts.gold { color: var(--gold); }
+  .round-result-pts.orange { color: var(--orange); }
+
+  /* RAIO-X */
+  .raiox-section {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .raiox-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px 14px;
+    border-bottom: 1.5px solid var(--border);
+  }
+  .raiox-icon { font-size: 28px; flex-shrink: 0; line-height: 1; }
+  .raiox-title {
+    font-family: var(--display);
+    font-size: 19px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text);
+    line-height: 1.1;
+    margin: 0;
+  }
+  .raiox-sub {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin: 4px 0 0;
+    line-height: 1.4;
+  }
+  .raiox-list { display: flex; flex-direction: column; }
+  .raiox-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    font-size: 17px;
+  }
+  .raiox-row:not(:last-child) { border-bottom: 1px dashed var(--border); }
+  .raiox-row-name {
+    flex: 1;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+  .raiox-row-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+    gap: 2px;
+  }
+  .raiox-pts {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+  .raiox-delta {
+    font-family: var(--body);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+  .raiox-delta.pos { color: var(--green); }
+  .raiox-delta.neg { color: var(--red); }
+  .raiox-meta { font-size: 14px; color: var(--text-muted); font-weight: 500; }
+  .raiox-streak {
+    font-family: var(--display);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+  }
+  .raiox-streak .x { font-size: 18px; opacity: 0.7; margin-left: 1px; font-weight: 600; }
+  .raiox-pos-mini {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text-muted);
+    min-width: 26px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  /* Contadores duplos MVP / MIT */
+  .raiox-mvp-mit {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .raiox-counter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 50px;
+  }
+  .raiox-counter .num {
+    font-family: var(--display);
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .raiox-counter .lbl {
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .raiox-counter.mvp .num { color: var(--gold); }
+  .raiox-counter.mit .num { color: var(--orange); }
+
+  /* Badge "em curso" para reinado ativo */
+  .reign-ongoing {
+    display: inline-block;
+    background: rgba(34, 197, 94, 0.18);
+    color: var(--green);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    font-family: var(--display);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-left: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  .raiox-empty {
+    padding: 22px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+  .raiox-badge {
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  .raiox-badge.gold { background: rgba(255, 182, 39, 0.18); color: var(--gold); }
+  .raiox-badge.red  { background: rgba(239, 68, 68, 0.16); color: var(--red); }
+
+  /* Rodadas notáveis - grid 2x2 */
+  .raiox-rounds {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+  .raiox-round-card {
+    background: var(--surface);
+    padding: 18px 14px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .raiox-round-emoji { font-size: 28px; line-height: 1; margin-bottom: 4px; }
+  .raiox-round-label {
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+  }
+  .raiox-round-num {
+    font-family: var(--display);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin: 4px 0 2px;
+  }
+  .raiox-round-stat {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.3;
+  }
+  .raiox-round-card.bombada     .raiox-round-num { color: var(--green); }
+  .raiox-round-card.apagada     .raiox-round-num { color: var(--icy); }
+  .raiox-round-card.abismo      .raiox-round-num { color: var(--orange); }
+  .raiox-round-card.equilibrada .raiox-round-num { color: var(--silver); }
+
+  /* AVATAR */
+  .team-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    font-family: var(--display);
+    font-weight: 700;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 2px solid rgba(255,255,255,0.12);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+
+  /* TENDÊNCIA NA CLASSIFICAÇÃO */
+  .classif-trend {
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .classif-trend .arrow { font-size: 13px; }
+  .classif-trend.up   { color: var(--green); }
+  .classif-trend.down { color: var(--red); }
+  .classif-trend.same { color: var(--text-muted); }
+
+  /* Badge de sequência (rodadas seguidas no pódio) */
+  .streak-badge {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 182, 39, 0.15);
+    color: var(--gold);
+    border: 1px solid rgba(255, 182, 39, 0.4);
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-left: 6px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  /* CHIP-BAR de rodadas */
+  .round-chips {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 12px 4px 14px;
+    margin: -4px -16px 14px;
+    padding-left: 16px;
+    padding-right: 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .round-chips::-webkit-scrollbar { height: 4px; }
+  .round-chips::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+  .round-chip {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    flex-shrink: 0;
+    min-width: 56px;
+    min-height: 44px;
+    scroll-snap-align: start;
+    transition: all 0.15s;
+  }
+  .round-chip:hover { border-color: var(--gold); }
+  .round-chip.current { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+  .round-chip.empty { opacity: 0.35; cursor: not-allowed; }
+
+  /* RODADA — card colapsável */
+  .round-card { transition: background 0.2s; }
+  .round-summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 16px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    min-height: 64px;
+  }
+  .round-summary::-webkit-details-marker { display: none; }
+  .round-summary-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+  }
+  .round-summary-num {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+  .round-summary-winner {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+  }
+  .round-summary-winner .pts {
+    font-family: var(--display);
+    color: var(--gold);
+    margin-left: 6px;
+  }
+  .round-summary-toggle {
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  details[open] .round-summary-toggle { transform: rotate(180deg); }
+  .round-card-body {
+    padding: 0 18px 14px;
+    border-top: 1px solid var(--border);
+  }
+  .round-card-body .round-result-line:first-child { padding-top: 14px; }
+
+  /* Times do meio (4º ao penúltimo) — escondidos por padrão */
+  .round-middle { display: none; }
+  .round-card.expanded .round-middle { display: flex; }
+
+  .round-expand-btn {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px 14px;
+    background: transparent;
+    border: 1.5px dashed var(--border-strong);
+    color: var(--text-muted);
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    min-height: 44px;
+  }
+  .round-expand-btn:hover {
+    border-color: var(--gold);
+    color: var(--text);
+  }
+
+  /* MOVERS — Maiores Movimentos */
+  .movers-grid {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .mover-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .mover-card.up   { border-color: rgba(34, 197, 94, 0.35); background: linear-gradient(135deg, rgba(34,197,94,0.10), rgba(26,34,56,1) 70%); }
+  .mover-card.down { border-color: rgba(239, 68, 68, 0.35); background: linear-gradient(135deg, rgba(239,68,68,0.10), rgba(26,34,56,1) 70%); }
+  .mover-info { flex: 1; min-width: 0; }
+  .mover-label {
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .mover-name {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mover-detail { font-size: 14px; color: var(--text-muted); }
+  .mover-delta {
+    font-family: var(--display);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .mover-card.up   .mover-delta { color: var(--green); }
+  .mover-card.down .mover-delta { color: var(--red); }
+
+  /* PROGRESS BAR no banner */
+  .round-progress {
+    margin-top: 10px;
+    z-index: 1;
+    position: relative;
+  }
+  .round-progress-track {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .round-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--orange));
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .round-progress-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-weight: 600;
+  }
+
+  /* BOTÃO VOLTAR AO TOPO */
+  .to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    font-size: 22px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: all 0.25s ease;
+    z-index: 90;
+  }
+  .to-top.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .to-top:focus-visible { outline: 3px solid var(--text); outline-offset: 2px; }
+
+  /* HELP */
+  .help {
+    margin-top: 28px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .help summary {
+    padding: 18px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 16px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 56px;
+  }
+  .help summary::-webkit-details-marker { display: none; }
+  .help summary::after {
+    content: '+';
+    font-family: var(--display);
+    font-size: 28px;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .help[open] summary::after { content: '−'; }
+  .help-content {
+    padding: 0 18px 20px;
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+  .help-content code {
+    display: block;
+    background: #0A0F1C;
+    padding: 14px;
+    border-radius: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--gold);
+    margin: 10px 0;
+    white-space: pre;
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    line-height: 1.6;
+  }
+  .help-content strong { color: var(--text); }
+  .help-content ol { padding-left: 22px; margin: 8px 0; }
+  .help-content li { margin-bottom: 6px; }
+
+  input[type="file"] { display: none; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(120px);
+    background: var(--surface-2);
+    border: 1.5px solid var(--green);
+    color: var(--text);
+    padding: 14px 22px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 15px;
+    z-index: 100;
+    transition: transform 0.3s ease;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    max-width: 90%;
+    text-align: center;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.error { border-color: var(--red); }
+
+  @media (min-width: 600px) {
+    .app { max-width: 520px; padding: 28px 24px 80px; }
+    body { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+  <div class="app">
+
+    <header class="header">
+      <div class="header-top">
+        <div class="brand-block">
+          <div class="brand">⚽ Supertécnicos</div>
+          <div class="brand-sub">CE · Cartola FC</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="round-banner">
+      <div class="round-banner-info">
+        <div class="round-label">Rodada</div>
+        <div class="round-num"><span id="round-num">—</span><span style="font-size:0.55em; color: var(--text-muted); font-weight:500"> / <span id="round-total">38</span></span></div>
+      </div>
+      <div class="round-banner-meta">
+        <strong id="participants-count">— times</strong>
+        <span class="source-pill" id="source-pill">Carregando...</span>
+      </div>
+      <div class="round-progress" style="grid-column:1/-1; flex-basis:100%; width:100%; margin-top:14px">
+        <div class="round-progress-track">
+          <div class="round-progress-fill" id="round-progress-fill" style="width:0%"></div>
+        </div>
+        <div class="round-progress-label" id="round-progress-label">Carregando...</div>
+      </div>
+    </div>
+
+    <div class="heroes">
+      <div class="hero-card mvp">
+        <div class="hero-icon gold">🏆</div>
+        <div class="hero-info">
+          <div class="hero-label">MVP da Rodada</div>
+          <div class="hero-name" id="mvp-name">—</div>
+          <div class="hero-bottom">
+            <span class="hero-points gold" id="mvp-points">—</span>
+            <span class="hero-detail" id="mvp-round">—</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-card mvp">
+        <div class="hero-icon gold">🥇</div>
+        <div class="hero-info">
+          <div class="hero-label">Maior MVP</div>
+          <div class="hero-name" id="top-mvp-name">—</div>
+          <div class="hero-bottom">
+            <span class="hero-points gold" id="top-mvp-count">—</span>
+            <span class="hero-detail">vezes MVP da rodada</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-card mitada">
+        <div class="hero-icon orange">🔥</div>
+        <div class="hero-info">
+          <div class="hero-label">Mais Mitadas</div>
+          <div class="hero-name" id="top-mit-name">—</div>
+          <div class="hero-bottom">
+            <span class="hero-points orange" id="top-mit-count">—</span>
+            <span class="hero-detail">vezes ≥80 pts</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-card podium">
+        <div class="hero-icon silver">🥉</div>
+        <div class="hero-info">
+          <div class="hero-label">Mais Pódios</div>
+          <div class="hero-name" id="top-pod-name">—</div>
+          <div class="hero-bottom">
+            <span class="hero-points silver" id="top-pod-count">—</span>
+            <span class="hero-detail">vezes no top 3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="classif" role="tab">Classificação</button>
+      <button class="tab" data-tab="rounds" role="tab">Rodadas</button>
+      <button class="tab" data-tab="raiox" role="tab">Raio-X</button>
+    </div>
+
+    <div id="classif-content"></div>
+    <div id="rounds-content" style="display:none"></div>
+    <div id="raiox-content" style="display:none"></div>
+
+  </div>
+
+  <button class="to-top" id="to-top" aria-label="Voltar ao topo" title="Voltar ao topo">↑</button>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+  // ============================================================
+  // CONFIG
+  // ============================================================
+  const MITADA_THRESHOLD = 80;
+  const CSV_URL = 'dados.csv';
+  const TOTAL_ROUNDS = 38;
+  const FORMA_WINDOW = 5;
+
+  // ============================================================
+  // DADOS EMBUTIDOS — Supertécnicos CE (atualizar via dados.csv)
+  // O fetch de dados.csv sobrescreve esses valores quando hospedado.
+  // ============================================================
+  let data = [
+    { name: 'Sons of Númenor',  rounds: [78.16, 73.30, 74.36, 64.65, 85.87, 79.11, 86.07, 78.15, 87.28, 56.27, 114.16, 86.00, 113.49, 57.99] },
+    { name: 'Ironverdict',      rounds: [73.20, 76.10, 95.16, 77.73, 73.07, 48.11, 70.97, 83.20, 76.78, 61.25, 114.76, 82.90, 131.89, 63.18] },
+    { name: 'Icebergteam',      rounds: [72.96, 82.90, 82.66, 87.05, 67.66, 72.51, 57.97, 75.05, 102.24, 49.37, 85.91, 76.20, 118.69, 71.38] },
+    { name: 'Andorinha Jr',     rounds: [69.05, 68.38, 93.16, 92.15, 85.02, 59.62, 74.36, 73.35, 65.24, 62.57, 107.86, 74.40, 98.39, 58.50] },
+    { name: 'Andorinha',        rounds: [68.66, 63.28, 91.66, 103.45, 89.52, 58.22, 74.36, 81.35, 65.24, 36.17, 96.86, 76.40, 90.89, 58.50] },
+    { name: 'CEEC',             rounds: [67.86, 73.10, 87.16, 95.85, 81.97, 69.21, 91.57, 72.55, 89.78, 44.67, 93.06, 60.20, 112.99, 67.08] },
+    { name: 'Varelitas',        rounds: [67.70, 63.10, 65.54, 37.94, 89.10, 63.81, 56.57, 73.52, 70.88, 49.17, 82.76, 77.55, 82.14, 46.14] },
+    { name: 'Otopatamá',        rounds: [66.76, 72.58, 81.06, 84.35, 95.57, 54.85, 75.37, 76.95, 82.98, 47.77, 93.06, 79.05, 116.19, 68.08] },
+    { name: 'Lobonegro',        rounds: [25.02, 79.48, 89.46, 76.13, 69.87, 60.16, 68.87, 80.92, 100.08, 38.17, 99.66, 90.80, 103.79, 51.69] },
+  ];
+
+  let currentTab = 'classif';
+  let dataSource = 'sample'; // 'sample' | 'auto' | 'manual'
+
+  // ============================================================
+  // HELPERS
+  // ============================================================
+  const fmt = n => (Number(n) || 0).toFixed(2).replace('.', ',');
+  const totalPoints = p => p.rounds.reduce((s, r) => s + (Number(r) || 0), 0);
+  const currentRound = () => Math.max(...data.map(p => p.rounds.length), 0);
+  const ESCAPE_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+  const safe = s => String(s).replace(/[&<>"']/g, ch => ESCAPE_MAP[ch]);
+
+  // Avatar colorido baseado no nome do time
+  function teamHue(name) {
+    let h = 0;
+    for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
+    return h % 360;
+  }
+  function teamInitials(name) {
+    // Ignora preposições/artigos comuns
+    const STOPWORDS = new Set(['of', 'da', 'de', 'do', 'das', 'dos', 'e', 'the', 'a', 'o', 'la', 'le']);
+    const words = String(name).trim().split(/\s+/);
+    const meaningful = words.filter(w => !STOPWORDS.has(w.toLowerCase()));
+    const source = meaningful.length === 0
+      ? String(name)
+      : meaningful.reduce((a, b) => b.length > a.length ? b : a);
+    // Pega 2 primeiras letras da palavra principal e remove acentos (NÚ → NU)
+    return source.slice(0, 2).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
+  }
+  function avatarHTML(name, size = 44) {
+    const hue = teamHue(name);
+    const bg = `hsl(${hue}, 55%, 35%)`;
+    const fontSize = Math.round(size * 0.4);
+    return `<span class="team-avatar" aria-hidden="true" style="width:${size}px;height:${size}px;background:${bg};font-size:${fontSize}px">${safe(teamInitials(name))}</span>`;
+  }
+
+  function getClassifAt(roundLimit) {
+    return [...data]
+      .map(p => {
+        const slice = p.rounds.slice(0, roundLimit);
+        const total = slice.reduce((s, r) => s + (Number(r) || 0), 0);
+        const played = slice.filter(r => Number(r) > 0).length;
+        const avg = played > 0 ? total / played : 0;
+        return { ...p, total, avg, played };
+      })
+      .sort((a, b) => b.total - a.total);
+  }
+
+  function getClassif() {
+    const cur = currentRound();
+    const current = getClassifAt(cur);
+    if (cur < 2) return current.map(p => ({ ...p, trend: null }));
+    const prev = getClassifAt(cur - 1);
+    const prevPos = new Map(prev.map((p, i) => [p.name, i + 1]));
+    return current.map((p, i) => {
+      const prevP = prevPos.get(p.name);
+      const trend = prevP ? prevP - (i + 1) : null;
+      return { ...p, trend };
+    });
+  }
+
+  function trendHTML(trend) {
+    if (trend === null) return '';
+    if (trend > 0)  return `<div class="classif-trend up"><span class="arrow" aria-hidden="true">▲</span> Subiu ${trend}</div>`;
+    if (trend < 0)  return `<div class="classif-trend down"><span class="arrow" aria-hidden="true">▼</span> Caiu ${-trend}</div>`;
+    return `<div class="classif-trend same"><span class="arrow" aria-hidden="true">─</span> Manteve</div>`;
+  }
+
+  function getMVP() {
+    const lastIdx = currentRound() - 1;
+    if (lastIdx < 0) return null;
+    let best = null;
+    for (const p of data) {
+      const score = Number(p.rounds[lastIdx]) || 0;
+      if (score > 0 && (!best || score > best.score)) {
+        best = { name: p.name, score, round: lastIdx + 1 };
+      }
+    }
+    return best;
+  }
+
+  function getMitadaRecord() {
+    let best = null;
+    data.forEach(p => {
+      p.rounds.forEach((score, idx) => {
+        const s = Number(score) || 0;
+        if (s > 0 && (!best || s > best.score)) {
+          best = { name: p.name, score: s, round: idx + 1 };
+        }
+      });
+    });
+    return best;
+  }
+
+  // Caneca = pior pontuação registrada em uma única rodada
+  function getCaneca() {
+    let worst = null;
+    data.forEach(p => {
+      p.rounds.forEach((score, idx) => {
+        const s = Number(score) || 0;
+        if (s > 0 && (!worst || s < worst.score)) {
+          worst = { name: p.name, score: s, round: idx + 1 };
+        }
+      });
+    });
+    return worst;
+  }
+
+  // Maiores movimentos de posição entre rodadas consecutivas
+  function getMovers() {
+    const totalRounds = currentRound();
+    if (totalRounds < 2) return { up: null, down: null };
+    const rankByRound = [];
+    for (let r = 1; r <= totalRounds; r++) {
+      const standings = getClassifAt(r);
+      const m = new Map();
+      standings.forEach((p, i) => m.set(p.name, i + 1));
+      rankByRound.push(m);
+    }
+    let up = null, down = null;
+    for (let r = 1; r < totalRounds; r++) {
+      const prev = rankByRound[r - 1];
+      const cur = rankByRound[r];
+      for (const name of cur.keys()) {
+        if (!prev.has(name)) continue;
+        const fromPos = prev.get(name);
+        const toPos = cur.get(name);
+        const delta = fromPos - toPos;
+        if (delta > 0 && (!up || delta > up.delta))   up   = { name, delta, fromPos, toPos, round: r + 1 };
+        if (delta < 0 && (!down || delta < down.delta)) down = { name, delta, fromPos, toPos, round: r + 1 };
+      }
+    }
+    return { up, down };
+  }
+
+  // Estatísticas acumuladas (Líderes da Temporada)
+  function getCareerStats() {
+    const stats = {};
+    data.forEach(p => { stats[p.name] = { mvp: 0, mitada: 0, lanterna: 0, podium: 0 }; });
+
+    const totalRounds = currentRound();
+    for (let r = 0; r < totalRounds; r++) {
+      const roundScores = data
+        .map(p => ({ name: p.name, score: Number(p.rounds[r]) || 0 }))
+        .filter(p => p.score > 0)
+        .sort((a, b) => b.score - a.score);
+
+      if (roundScores.length === 0) continue;
+
+      // MVP da rodada (1º)
+      stats[roundScores[0].name].mvp++;
+
+      // Pódio (top 3)
+      for (let i = 0; i < Math.min(3, roundScores.length); i++) {
+        stats[roundScores[i].name].podium++;
+      }
+
+      // Lanterna da rodada (último, só se houver mais de 1 que jogou)
+      if (roundScores.length > 1) {
+        stats[roundScores[roundScores.length - 1].name].lanterna++;
+      }
+
+      // Mitadas (todos com >= threshold)
+      roundScores.forEach(p => {
+        if (p.score >= MITADA_THRESHOLD) stats[p.name].mitada++;
+      });
+    }
+
+    const findLeader = (key) => {
+      const entries = Object.entries(stats).map(([name, s]) => ({ name, count: s[key] }));
+      if (entries.length === 0) return { name: '—', count: 0 };
+      const max = Math.max(...entries.map(e => e.count));
+      if (max === 0) return { name: 'Ninguém ainda', count: 0 };
+      const leaders = entries.filter(e => e.count === max);
+      if (leaders.length === 1) return leaders[0];
+      if (leaders.length === 2) return { name: leaders.map(l => l.name).join(' e '), count: max };
+      return { name: `${leaders[0].name} +${leaders.length - 1}`, count: max };
+    };
+
+    return {
+      mvp: findLeader('mvp'),
+      mitada: findLeader('mitada'),
+      lanterna: findLeader('lanterna'),
+      podium: findLeader('podium')
+    };
+  }
+
+  // ============================================================
+  // RAIO-X — análises avançadas
+  // ============================================================
+
+  // Classificação por média (pts por rodada)
+  function getClassifByAvg() {
+    return [...data]
+      .map(p => {
+        const scores = p.rounds.filter(r => Number(r) > 0).map(Number);
+        const total = scores.reduce((s, r) => s + r, 0);
+        const avg = scores.length ? total / scores.length : 0;
+        return { name: p.name, avg, played: scores.length };
+      })
+      .sort((a, b) => b.avg - a.avg);
+  }
+
+  // Top 5 maiores pontuações da temporada
+  function getTop5Scores() {
+    const all = [];
+    data.forEach(p => {
+      p.rounds.forEach((score, idx) => {
+        const s = Number(score) || 0;
+        if (s > 0) all.push({ name: p.name, score: s, round: idx + 1 });
+      });
+    });
+    return all.sort((a, b) => b.score - a.score).slice(0, 5);
+  }
+
+  // MVPs, Mitadas e Pódios por time
+  function getMvpMitadaStats() {
+    const stats = {};
+    data.forEach(p => { stats[p.name] = { mvp: 0, mitada: 0, podium: 0 }; });
+
+    const totalRounds = currentRound();
+    for (let r = 0; r < totalRounds; r++) {
+      const roundScores = data
+        .map(p => ({ name: p.name, score: Number(p.rounds[r]) || 0 }))
+        .filter(p => p.score > 0)
+        .sort((a, b) => b.score - a.score);
+      if (roundScores.length === 0) continue;
+
+      // MVP da rodada (1º lugar)
+      stats[roundScores[0].name].mvp++;
+
+      // Pódio (top 3)
+      for (let i = 0; i < Math.min(3, roundScores.length); i++) {
+        stats[roundScores[i].name].podium++;
+      }
+
+      // Mitadas (todos com >= threshold)
+      roundScores.forEach(p => {
+        if (p.score >= MITADA_THRESHOLD) stats[p.name].mitada++;
+      });
+    }
+
+    return Object.entries(stats)
+      .map(([name, s]) => ({ name, mvp: s.mvp, mitada: s.mitada, podium: s.podium }))
+      .sort((a, b) => {
+        if (b.mvp !== a.mvp) return b.mvp - a.mvp;
+        return b.mitada - a.mitada;
+      });
+  }
+
+  // Sequência atual no pódio (top 3)
+  function getStreaks() {
+    const totalRounds = currentRound();
+    const allRoundRankings = [];
+    for (let r = 0; r < totalRounds; r++) {
+      const sorted = data
+        .map(p => ({ name: p.name, score: Number(p.rounds[r]) || 0 }))
+        .filter(p => p.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3)
+        .map(p => p.name);
+      allRoundRankings.push(sorted);
+    }
+    return data.map(p => {
+      let streak = 0;
+      for (let r = totalRounds - 1; r >= 0; r--) {
+        if (allRoundRankings[r].includes(p.name)) streak++;
+        else break;
+      }
+      return { name: p.name, streak };
+    }).filter(p => p.streak > 0).sort((a, b) => b.streak - a.streak);
+  }
+
+  // Maior tempo contínuo na liderança geral
+  function getReigns() {
+    const totalRounds = currentRound();
+    if (totalRounds === 0) return [];
+
+    // Quem foi líder geral a cada rodada
+    const leaderByRound = [];
+    for (let r = 1; r <= totalRounds; r++) {
+      const standings = getClassifAt(r);
+      leaderByRound.push(standings[0].name);
+    }
+
+    // Calcula melhor sequência contínua por time
+    const best = {};  // name -> { length, start, end }
+    let curName = null, curStart = 0, curLen = 0;
+
+    for (let i = 0; i < leaderByRound.length; i++) {
+      const lider = leaderByRound[i];
+      if (lider === curName) {
+        curLen++;
+      } else {
+        curName = lider;
+        curStart = i + 1;
+        curLen = 1;
+      }
+      const prevBest = best[lider]?.length || 0;
+      if (curLen > prevBest) {
+        best[lider] = { length: curLen, start: curStart, end: i + 1 };
+      }
+    }
+
+    // Marca quais sequências são "em curso" (terminaram na última rodada)
+    const result = Object.entries(best)
+      .map(([name, info]) => ({
+        name,
+        length: info.length,
+        start: info.start,
+        end: info.end,
+        ongoing: info.end === totalRounds
+      }))
+      .sort((a, b) => b.length - a.length);
+
+    return result;
+  }
+
+  // Rodadas notáveis: mais bombada, mais apagada, maior abismo, mais equilibrada
+  function getRodadasNotaveis() {
+    const totalRounds = currentRound();
+    let best = null, worst = null, bigGap = null, smallGap = null;
+    for (let r = 1; r <= totalRounds; r++) {
+      const idx = r - 1;
+      const scores = data.map(p => Number(p.rounds[idx]) || 0).filter(s => s > 0);
+      if (scores.length === 0) continue;
+      const sum = scores.reduce((a, b) => a + b, 0);
+      const avg = sum / scores.length;
+      const gap = Math.max(...scores) - Math.min(...scores);
+      if (!best || sum > best.sum) best = { round: r, sum, avg };
+      if (!worst || sum < worst.sum) worst = { round: r, sum, avg };
+      if (!bigGap || gap > bigGap.gap) bigGap = { round: r, gap };
+      if (!smallGap || gap < smallGap.gap) smallGap = { round: r, gap };
+    }
+    return { best, worst, bigGap, smallGap };
+  }
+
+  // ============================================================
+  // RENDER
+  // ============================================================
+  function render() {
+    const sorted = getClassif();
+
+    // Banner
+    const cur = currentRound();
+    document.getElementById('round-num').textContent = cur || '—';
+    document.getElementById('round-total').textContent = TOTAL_ROUNDS;
+    document.getElementById('participants-count').textContent = `${data.length} times`;
+    const pct = Math.max(0, Math.min(100, (cur / TOTAL_ROUNDS) * 100));
+    document.getElementById('round-progress-fill').style.width = pct + '%';
+    const remaining = Math.max(0, TOTAL_ROUNDS - cur);
+    document.getElementById('round-progress-label').textContent =
+      remaining === 0 ? 'Temporada completa' : `Faltam ${remaining} rodadas`;
+
+    const sourceMap = {
+      'sample': { txt: 'Dados embutidos', cls: '' },
+      'auto':   { txt: '● Ao vivo', cls: 'live' },
+      'manual': { txt: 'CSV manual', cls: 'live' }
+    };
+    const src = sourceMap[dataSource];
+    const pill = document.getElementById('source-pill');
+    pill.textContent = src.txt;
+    pill.className = 'source-pill ' + src.cls;
+
+    // Heroes
+    const mvp = getMVP();
+    if (mvp) {
+      document.getElementById('mvp-name').textContent = mvp.name;
+      document.getElementById('mvp-points').textContent = fmt(mvp.score) + ' pts';
+      document.getElementById('mvp-round').textContent = `na Rodada ${mvp.round}`;
+    } else {
+      document.getElementById('mvp-name').textContent = 'Sem dados';
+      document.getElementById('mvp-points').textContent = '—';
+      document.getElementById('mvp-round').textContent = '';
+    }
+
+    // Cards "Maior MVP" e "Mais Mitadas"
+    const stats = getMvpMitadaStats();
+    if (stats.length > 0) {
+      // Helper pra resolver empates (mesmo padrão do Raio-X)
+      const topOf = (key) => {
+        const max = Math.max(...stats.map(s => s[key]));
+        if (max === 0) return { name: 'Ninguém ainda', count: 0 };
+        const tied = stats.filter(s => s[key] === max);
+        if (tied.length === 1) return { name: tied[0].name, count: max };
+        if (tied.length === 2) return { name: tied.map(s => s.name).join(' e '), count: max };
+        return { name: `${tied[0].name} +${tied.length - 1}`, count: max };
+      };
+
+      const topMvp = topOf('mvp');
+      const topMit = topOf('mitada');
+      const topPod = topOf('podium');
+
+      document.getElementById('top-mvp-name').textContent = topMvp.name;
+      document.getElementById('top-mvp-count').textContent = topMvp.count + '×';
+      document.getElementById('top-mit-name').textContent = topMit.name;
+      document.getElementById('top-mit-count').textContent = topMit.count + '×';
+      document.getElementById('top-pod-name').textContent = topPod.name;
+      document.getElementById('top-pod-count').textContent = topPod.count + '×';
+    }
+
+    // Tab content
+    if (currentTab === 'classif') renderClassif(sorted);
+    else if (currentTab === 'rounds') renderRounds();
+    else if (currentTab === 'raiox') renderRaioX();
+
+    document.getElementById('classif-content').style.display = currentTab === 'classif' ? 'block' : 'none';
+    document.getElementById('rounds-content').style.display = currentTab === 'rounds' ? 'block' : 'none';
+    document.getElementById('raiox-content').style.display = currentTab === 'raiox' ? 'block' : 'none';
+  }
+
+  function renderRaioX() {
+    let html = '';
+
+    // 1. MVPs e Mitadas
+    const stats = getMvpMitadaStats();
+    html += `
+      <div class="raiox-section">
+        <div class="raiox-head">
+          <span class="raiox-icon">🏆</span>
+          <div>
+            <h3 class="raiox-title">MVPs e Mitadas</h3>
+            <p class="raiox-sub">Quantas vezes foi melhor da rodada e fez ≥80 pts</p>
+          </div>
+        </div>
+        <div class="raiox-list">
+          ${stats.map(s => `
+            <div class="raiox-row">
+              <div class="raiox-row-name">
+                ${avatarHTML(s.name, 32)}
+                <span>${safe(s.name)}</span>
+              </div>
+              <div class="raiox-mvp-mit">
+                <span class="raiox-counter mvp"><span class="num">${s.mvp}</span><span class="lbl">🏆 MVP</span></span>
+                <span class="raiox-counter mit"><span class="num">${s.mitada}</span><span class="lbl">🔥 MIT</span></span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    // 2. Reinados na Liderança (maior sequência contínua em 1º)
+    const reigns = getReigns().slice(0, 3);
+    if (reigns.length > 0 && reigns[0].length > 0) {
+      html += `
+        <div class="raiox-section">
+          <div class="raiox-head">
+            <span class="raiox-icon">👑</span>
+            <div>
+              <h3 class="raiox-title">Maiores Reinados</h3>
+              <p class="raiox-sub">Mais rodadas seguidas na liderança</p>
+            </div>
+          </div>
+          <div class="raiox-list">
+            ${reigns.map((r, i) => {
+              const period = r.start === r.end ? `R${r.start}` : `R${r.start} → R${r.end}`;
+              const ongoingBadge = r.ongoing ? '<span class="reign-ongoing">em curso</span>' : '';
+              const medal = i === 0 ? '🥇' : (i === 1 ? '🥈' : '🥉');
+              return `
+                <div class="raiox-row">
+                  <div class="raiox-row-name">
+                    <span class="raiox-pos-mini">${medal}</span>
+                    ${avatarHTML(r.name, 32)}
+                    <span>${safe(r.name)} ${ongoingBadge}</span>
+                  </div>
+                  <div class="raiox-row-stats">
+                    <span class="raiox-streak">${r.length}<span class="x">×</span></span>
+                    <span class="raiox-meta">${period}</span>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // 3. Top 5 Pontuações
+    const top5 = getTop5Scores();
+    html += `
+      <div class="raiox-section">
+        <div class="raiox-head">
+          <span class="raiox-icon">🏆</span>
+          <div>
+            <h3 class="raiox-title">Top 5 Pontuações</h3>
+            <p class="raiox-sub">As maiores mitadas do campeonato</p>
+          </div>
+        </div>
+        <div class="raiox-list">
+          ${top5.map((s, i) => `
+            <div class="raiox-row">
+              <div class="raiox-row-name">
+                <span class="raiox-pos-mini">${i+1}º</span>
+                ${avatarHTML(s.name, 32)}
+                <span>${safe(s.name)}</span>
+              </div>
+              <div class="raiox-row-stats">
+                <span class="raiox-pts" style="color:var(--orange)">${fmt(s.score)}</span>
+                <span class="raiox-meta">na Rodada ${s.round}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    // 4. Caneca da Temporada (pior pontuação única)
+    const caneca = getCaneca();
+    if (caneca) {
+      html += `
+        <div class="raiox-section">
+          <div class="raiox-head">
+            <span class="raiox-icon">🥶</span>
+            <div>
+              <h3 class="raiox-title">Caneca da Temporada</h3>
+              <p class="raiox-sub">A menor pontuação registrada</p>
+            </div>
+          </div>
+          <div class="raiox-list">
+            <div class="raiox-row">
+              <div class="raiox-row-name">
+                ${avatarHTML(caneca.name, 32)}
+                <span>${safe(caneca.name)}</span>
+              </div>
+              <div class="raiox-row-stats">
+                <span class="raiox-pts" style="color:var(--icy)">${fmt(caneca.score)}</span>
+                <span class="raiox-meta">na Rodada ${caneca.round}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 5. Maiores Movimentos
+    const movers = getMovers();
+    if (movers.up || movers.down) {
+      html += `
+        <div class="raiox-section">
+          <div class="raiox-head">
+            <span class="raiox-icon">🎢</span>
+            <div>
+              <h3 class="raiox-title">Maiores Movimentos</h3>
+              <p class="raiox-sub">As maiores subidas e quedas da temporada</p>
+            </div>
+          </div>
+          <div class="movers-grid" style="margin: 0; padding: 16px">
+      `;
+      if (movers.up) {
+        html += `
+            <div class="mover-card up">
+              <div class="mover-info">
+                <div class="mover-label">⬆️ Maior subida</div>
+                <div class="mover-name">${safe(movers.up.name)}</div>
+                <div class="mover-detail">${movers.up.fromPos}º → ${movers.up.toPos}º na R${movers.up.round}</div>
+              </div>
+              <div class="mover-delta">+${movers.up.delta}</div>
+            </div>
+        `;
+      }
+      if (movers.down) {
+        html += `
+            <div class="mover-card down">
+              <div class="mover-info">
+                <div class="mover-label">⬇️ Maior queda</div>
+                <div class="mover-name">${safe(movers.down.name)}</div>
+                <div class="mover-detail">${movers.down.fromPos}º → ${movers.down.toPos}º na R${movers.down.round}</div>
+              </div>
+              <div class="mover-delta">${movers.down.delta}</div>
+            </div>
+        `;
+      }
+      html += `
+          </div>
+        </div>
+      `;
+    }
+
+    // 6. Rodadas Notáveis
+    const not = getRodadasNotaveis();
+    if (not.best && not.worst && not.bigGap && not.smallGap) {
+      html += `
+      <div class="raiox-section">
+        <div class="raiox-head">
+          <span class="raiox-icon">🌟</span>
+          <div>
+            <h3 class="raiox-title">Rodadas Notáveis</h3>
+            <p class="raiox-sub">Os marcos do campeonato</p>
+          </div>
+        </div>
+        <div class="raiox-rounds">
+          <div class="raiox-round-card bombada">
+            <div class="raiox-round-emoji">🚀</div>
+            <div class="raiox-round-label">Mais bombada</div>
+            <div class="raiox-round-num">R${not.best.round}</div>
+            <div class="raiox-round-stat">média ${fmt(not.best.avg)} pts</div>
+          </div>
+          <div class="raiox-round-card apagada">
+            <div class="raiox-round-emoji">💤</div>
+            <div class="raiox-round-label">Mais apagada</div>
+            <div class="raiox-round-num">R${not.worst.round}</div>
+            <div class="raiox-round-stat">média ${fmt(not.worst.avg)} pts</div>
+          </div>
+          <div class="raiox-round-card abismo">
+            <div class="raiox-round-emoji">🎢</div>
+            <div class="raiox-round-label">Maior abismo</div>
+            <div class="raiox-round-num">R${not.bigGap.round}</div>
+            <div class="raiox-round-stat">${fmt(not.bigGap.gap)} pts de gap</div>
+          </div>
+          <div class="raiox-round-card equilibrada">
+            <div class="raiox-round-emoji">⚖️</div>
+            <div class="raiox-round-label">Mais equilibrada</div>
+            <div class="raiox-round-num">R${not.smallGap.round}</div>
+            <div class="raiox-round-stat">só ${fmt(not.smallGap.gap)} pts de gap</div>
+          </div>
+        </div>
+      </div>
+    `;
+    }
+
+    document.getElementById('raiox-content').innerHTML = html;
+  }
+
+  function renderClassif(sorted) {
+    const total = sorted.length;
+    const streakMap = new Map(getStreaks().map(s => [s.name, s.streak]));
+    const html = sorted.map((p, idx) => {
+      const pos = idx + 1;
+      let cls = '', medal = '';
+      if (pos === 1) { cls = 'top1'; medal = '🏆'; }
+      else if (pos === 2) { cls = 'top2'; medal = '🥈'; }
+      else if (pos === 3) { cls = 'top3'; medal = '🥉'; }
+      else if (pos === total && total > 3) { cls = 'last'; medal = '🪫'; }
+
+      const streak = streakMap.get(p.name) || 0;
+      const streakBadge = streak >= 2
+        ? `<span class="streak-badge" title="${streak} rodadas seguidas no top 3">🔥 ${streak}×</span>`
+        : '';
+
+      return `
+        <div class="classif-row ${cls}">
+          <div class="pos">${pos}º</div>
+          ${avatarHTML(p.name, 40)}
+          <div class="classif-info">
+            <div class="classif-name">${medal ? `<span>${medal}</span>` : ''} <span>${safe(p.name)}</span> ${streakBadge}</div>
+            <div class="classif-meta">Média: ${fmt(p.avg)} pts/rodada</div>
+            ${trendHTML(p.trend)}
+          </div>
+          <div class="classif-pts-wrap">
+            <div class="classif-pts">${fmt(p.total)}</div>
+            <div class="classif-pts-label">Total</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+    document.getElementById('classif-content').innerHTML = `<div class="classif-list">${html}</div>`;
+  }
+
+  function renderRounds() {
+    const totalRounds = currentRound();
+    if (totalRounds === 0) {
+      document.getElementById('rounds-content').innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px 0;">Sem rodadas ainda.</p>';
+      return;
+    }
+
+    // Chip-bar
+    const totalChips = Math.max(TOTAL_ROUNDS, totalRounds);
+    let chipsHTML = '<div class="round-chips" id="round-chips" role="navigation" aria-label="Ir para rodada">';
+    for (let r = 1; r <= totalChips; r++) {
+      const isCurrent = r === totalRounds;
+      const isEmpty = r > totalRounds;
+      chipsHTML += `<button class="round-chip ${isCurrent?'current':''} ${isEmpty?'empty':''}" data-round="${r}" ${isEmpty?'disabled':''}>R${r}</button>`;
+    }
+    chipsHTML += '</div>';
+
+    let html = chipsHTML + '<div class="rounds-list">';
+
+    for (let r = totalRounds; r >= 1; r--) {
+      const idx = r - 1;
+      const scores = data
+        .map(p => ({ name: p.name, score: Number(p.rounds[idx]) || 0 }))
+        .filter(p => p.score > 0)
+        .sort((a, b) => b.score - a.score);
+
+      if (scores.length === 0) continue;
+      const lastIdx = scores.length - 1;
+      const winner = scores[0];
+      const isCurrent = r === totalRounds;
+
+      let bodyHTML = '';
+      const topN = 3;
+      const middleStart = topN;
+      const middleEnd = lastIdx; // exclusivo
+      const hasMiddle = middleEnd > middleStart;
+
+      scores.forEach((p, i) => {
+        const isFirst = i === 0;
+        const isLast = i === lastIdx;
+        const isMitada = p.score >= MITADA_THRESHOLD;
+        const isMiddle = i >= middleStart && i < middleEnd;
+
+        let icon = '';
+        if (isFirst) icon = '🏆 ';
+        else if (isLast) icon = '🪫 ';
+        else if (isMitada) icon = '🔥 ';
+
+        let posCls = '';
+        if (isFirst) posCls = 'first';
+        else if (isLast) posCls = 'last';
+
+        let ptsCls = '';
+        if (isFirst) ptsCls = 'gold';
+        else if (isMitada) ptsCls = 'orange';
+
+        const lineCls = isMiddle ? 'round-result-line round-middle' : 'round-result-line';
+
+        bodyHTML += `
+          <div class="${lineCls}">
+            <div class="round-result-name">
+              <span class="round-result-pos ${posCls}">${i+1}º</span>
+              ${avatarHTML(p.name, 32)}
+              <span class="nm">${icon}${safe(p.name)}</span>
+            </div>
+            <div class="round-result-pts ${ptsCls}">${fmt(p.score)}</div>
+          </div>
+        `;
+      });
+
+      // Botão "Ver todos" se houver times no meio (4º ao penúltimo)
+      const expandBtn = hasMiddle
+        ? `<button class="round-expand-btn" data-round="${r}" type="button">Ver todos os ${scores.length} times</button>`
+        : '';
+
+      html += `
+        <details class="round-card" id="round-card-${r}" ${isCurrent ? 'open' : ''}>
+          <summary class="round-summary">
+            <div class="round-summary-info">
+              <span class="round-summary-num">R${r}</span>
+              ${avatarHTML(winner.name, 36)}
+              <span class="round-summary-winner">🏆 ${safe(winner.name)} <span class="pts">${fmt(winner.score)}</span></span>
+            </div>
+            <span class="round-summary-toggle" aria-hidden="true">▼</span>
+          </summary>
+          <div class="round-card-body">
+            ${bodyHTML}
+            ${expandBtn}
+          </div>
+        </details>
+      `;
+    }
+    html += '</div>';
+    document.getElementById('rounds-content').innerHTML = html;
+
+    // Click no chip rola até o card e abre
+    const chipsBox = document.getElementById('round-chips');
+    if (chipsBox) {
+      chipsBox.addEventListener('click', (e) => {
+        const btn = e.target.closest('.round-chip');
+        if (!btn || btn.disabled) return;
+        const card = document.getElementById(`round-card-${btn.dataset.round}`);
+        if (card) {
+          card.open = true;
+          card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    }
+
+    // Click no "Ver todos" expande os times do meio
+    document.querySelectorAll('.round-expand-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.round-card');
+        const isExpanded = card.classList.toggle('expanded');
+        btn.textContent = isExpanded
+          ? 'Ocultar times do meio'
+          : `Ver todos os ${btn.dataset.round && card.querySelectorAll('.round-result-line').length} times`;
+      });
+    });
+  }
+
+  function setTab(t) {
+    currentTab = t;
+    document.querySelectorAll('.tab').forEach(b => {
+      const active = b.dataset.tab === t;
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-selected', active);
+      b.setAttribute('tabindex', active ? '0' : '-1');
+    });
+    render();
+  }
+
+  let toastTimer = null;
+  function showToast(msg, isError = false, duration = 5500) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.toggle('error', isError);
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), duration);
+  }
+
+  // ============================================================
+  // PARSE CSV — aceita 2 formatos:
+  //  LONGO: rodada,time,pontos  (uma linha por jogador/rodada)
+  //  LARGO: Participante,R1,R2,R3,...  (uma linha por jogador)
+  // ============================================================
+
+  // Splitter compatível com RFC 4180 (aceita aspas com vírgulas/aspas duplas internas)
+  function splitCSVLine(line, sep) {
+    const out = [];
+    let cur = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (inQuotes) {
+        if (ch === '"' && line[i + 1] === '"') { cur += '"'; i++; }
+        else if (ch === '"') { inQuotes = false; }
+        else { cur += ch; }
+      } else {
+        if (ch === '"') inQuotes = true;
+        else if (ch === sep) { out.push(cur.trim()); cur = ''; }
+        else { cur += ch; }
+      }
+    }
+    out.push(cur.trim());
+    return out;
+  }
+
+  function parseCSV(text) {
+    const lines = text.replace(/^\uFEFF/, '').trim().split(/\r?\n/);
+    if (lines.length < 2) return null;
+
+    const sep = lines[0].includes(';') ? ';' : ',';
+    const header = splitCSVLine(lines[0], sep).map(s => s.trim().toLowerCase());
+
+    const hasRodada = header.some(h => /^rodada$/.test(h));
+    const hasTime   = header.some(h => /^(time|participante|nome)$/.test(h));
+    const hasPontos = header.some(h => /^pontos?$/.test(h));
+
+    if (hasRodada && hasTime && hasPontos) return parseLong(lines, sep, header);
+    return parseWide(lines, sep);
+  }
+
+  function parseLong(lines, sep, header) {
+    const ri = header.findIndex(h => /^rodada$/.test(h));
+    const ti = header.findIndex(h => /^(time|participante|nome)$/.test(h));
+    const pi = header.findIndex(h => /^pontos?$/.test(h));
+
+    const teams = new Map();
+    let maxRound = 0;
+
+    for (let i = 1; i < lines.length; i++) {
+      const cols = splitCSVLine(lines[i], sep);
+      if (cols.length < 3) continue;
+      const round = parseInt(cols[ri], 10);
+      const name  = cols[ti];
+      const score = parseFloat(String(cols[pi]).replace(',', '.'));
+      if (!round || !name || isNaN(score)) continue;
+      if (!teams.has(name)) teams.set(name, {});
+      teams.get(name)[round] = score;
+      if (round > maxRound) maxRound = round;
+    }
+
+    if (teams.size === 0 || maxRound === 0) return null;
+
+    const result = [];
+    for (const [name, byRound] of teams.entries()) {
+      const rounds = [];
+      for (let r = 1; r <= maxRound; r++) rounds.push(byRound[r] || 0);
+      result.push({ name, rounds });
+    }
+    return result;
+  }
+
+  function parseWide(lines, sep) {
+    const header = splitCSVLine(lines[0], sep).map(s => s.trim().toLowerCase());
+    if (!/participante|nome|time/.test(header[0])) return null;
+
+    const newData = [];
+    for (let i = 1; i < lines.length; i++) {
+      const cols = splitCSVLine(lines[i], sep);
+      if (cols.length < 2) continue;
+      const name = cols[0];
+      if (!name) continue;
+      const rounds = cols.slice(1).map(v => {
+        if (!v) return 0;
+        const n = parseFloat(v.replace(',', '.'));
+        return isNaN(n) ? 0 : n;
+      });
+      if (rounds.length > 0) newData.push({ name, rounds });
+    }
+    return newData.length > 0 ? newData : null;
+  }
+
+  // ============================================================
+  // AUTO-LOAD do dados.csv (na mesma pasta)
+  // ============================================================
+  async function tryAutoLoad() {
+    try {
+      const r = await fetch(CSV_URL, { cache: 'no-store' });
+      if (!r.ok) return false;
+      const text = await r.text();
+      const parsed = parseCSV(text);
+      if (parsed) {
+        data = parsed;
+        dataSource = 'auto';
+        render();
+        return true;
+      }
+    } catch (e) {
+      // Silencioso — pode ser file:// ou CSV inexistente
+    }
+    return false;
+  }
+
+  // ============================================================
+  // INIT
+  // ============================================================
+  const tabButtons = Array.from(document.querySelectorAll('.tab'));
+  tabButtons.forEach((b, idx) => {
+    b.addEventListener('click', () => setTab(b.dataset.tab));
+    b.setAttribute('aria-selected', b.classList.contains('active'));
+    b.setAttribute('tabindex', b.classList.contains('active') ? '0' : '-1');
+    b.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      const dir = e.key === 'ArrowRight' ? 1 : -1;
+      const next = tabButtons[(idx + dir + tabButtons.length) % tabButtons.length];
+      setTab(next.dataset.tab);
+      next.focus();
+    });
+  });
+
+  // Botão voltar ao topo
+  const toTopBtn = document.getElementById('to-top');
+  window.addEventListener('scroll', () => {
+    toTopBtn.classList.toggle('show', window.scrollY > 600);
+  }, { passive: true });
+  toTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Upload manual de CSV foi removido — o dashboard usa apenas o dados.csv da mesma pasta.
+
+  render();
+  tryAutoLoad();
+</script>
+</body>
+</html>
