@@ -1735,6 +1735,31 @@
     }).filter(p => p.streak > 0).sort((a, b) => b.streak - a.streak);
   }
 
+  // Em chamas — ranking das últimas 4 rodadas
+  function getEmChamas(N = 4) {
+    const totalRounds = currentRound();
+    if (totalRounds === 0) return [];
+    const startIdx = Math.max(0, totalRounds - N);
+
+    return data.map(p => {
+      const recentSlice = p.rounds.slice(startIdx, totalRounds);
+      const soma = recentSlice.reduce((s, r) => s + (Number(r) || 0), 0);
+      const jogadas = recentSlice.filter(r => Number(r) > 0).length;
+      const mediaRecente = jogadas > 0 ? soma / jogadas : 0;
+
+      const todasScores = p.rounds.filter(r => Number(r) > 0).map(Number);
+      const mediaGeral = todasScores.length ? todasScores.reduce((s, r) => s + r, 0) / todasScores.length : 0;
+
+      return {
+        name: p.name,
+        soma,
+        mediaRecente,
+        mediaGeral,
+        delta: mediaRecente - mediaGeral
+      };
+    }).sort((a, b) => b.soma - a.soma);
+  }
+
   // Maior tempo contínuo na liderança geral
   function getReigns() {
     const totalRounds = currentRound();
@@ -1940,7 +1965,44 @@
       `;
     }
 
-    // 3. Top 5 Pontuações
+    // 3. Em Chamas — top das últimas 4 rodadas
+    const chamas = getEmChamas(4).slice(0, 5);
+    if (chamas.length > 0) {
+      html += `
+        <div class="raiox-section">
+          <div class="raiox-head">
+            <span class="raiox-icon">🌶️</span>
+            <div>
+              <h3 class="raiox-title">Em Chamas</h3>
+              <p class="raiox-sub">Top das últimas 4 rodadas</p>
+            </div>
+          </div>
+          <div class="raiox-list">
+            ${chamas.map((c, i) => {
+              const sign = c.delta >= 0 ? '+' : '';
+              const deltaCls = c.delta > 5 ? 'pos' : (c.delta < -3 ? 'neg' : '');
+              const rowCls = i === 0 ? 'top' : (i === 1 ? 'runner-up' : '');
+              const avSize = i === 0 ? 38 : (i === 1 ? 36 : 32);
+              return `
+                <div class="raiox-row ${rowCls}">
+                  <div class="raiox-row-name">
+                    <span class="raiox-pos-mini">${i+1}º</span>
+                    ${avatarHTML(c.name, avSize)}
+                    <span>${safe(c.name)}</span>
+                  </div>
+                  <div class="raiox-row-stats">
+                    <span class="raiox-pts" style="color:var(--orange)">${fmt(c.soma)}</span>
+                    <span class="raiox-meta">média ${fmt(c.mediaRecente)} <span class="raiox-delta ${deltaCls}">${sign}${fmt(c.delta)}</span></span>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // 4. Top 5 Pontuações
     const top5 = getTop5Scores();
     html += `
       <div class="raiox-section">
@@ -1969,7 +2031,7 @@
       </div>
     `;
 
-    // 4. Caneca da Temporada (pior pontuação única)
+    // 5. Caneca da Temporada (pior pontuação única)
     const caneca = getCaneca();
     if (caneca) {
       html += `
@@ -1997,7 +2059,7 @@
       `;
     }
 
-    // 5. Maiores Movimentos
+    // 6. Maiores Movimentos
     const movers = getMovers();
     if (movers.up || movers.down) {
       html += `
@@ -2041,7 +2103,7 @@
       `;
     }
 
-    // 6. Rodadas Notáveis
+    // 7. Rodadas Notáveis
     const not = getRodadasNotaveis();
     if (not.best && not.worst && not.bigGap && not.smallGap) {
       html += `
